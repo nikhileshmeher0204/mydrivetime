@@ -1,22 +1,27 @@
-const cors = require("cors");
 const express = require("express");
-require("dotenv").config
-
 const app = express();
-const Car = require('./models/carModel');
-const port = process.env.PORT || 5000;
-const dbConnection = require ('./db');
+const dotenv = require("dotenv");
+const cors = require("cors");
+const path = require("path");
+
+dotenv.config();
+
 app.use(express.json());
+
+const dbConnection = require('./db');
+const usersRoute = require('./routes/usersRoute')
+const carsRoute = require('./routes/carsRoute')
+const bookingsRoute = require('./routes/bookingsRoute')
+const Car = require('./models/carModel');
+
 app.use(cors({
   origin:["https://mern-car-rental-app.vercel.app/"],
   methods:["GET","POST", "PUT", "DELETE"],
   credentials: true
 }))
-const path = require("path");
-const usersRoute = require('./routes/usersRoute')
-const carsRoute = require('./routes/carsRoute')
-const bookingsRoute = require('./routes/bookingsRoute')
 
+
+const port = process.env.PORT || 5000;
 
 
 app.use("/api/cars/", require("./routes/carsRoute"));

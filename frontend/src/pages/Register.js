@@ -1,13 +1,14 @@
 import React from "react";
-import { Row, Col, Form, Input } from "antd";
+import { Row, Col, Form, Input, Select} from "antd";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userRegister } from "../redux/actions/userActions";
 import AOS from "aos";
 import Spinner from "../components/Spinner";
-import "aos/dist/aos.css"; // You can also use <link> for styles
-// ..
+import "aos/dist/aos.css"; 
 AOS.init();
+const { Option } = Select; // Destructure Option from Select
+
 function Register() {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.alertsReducer);
@@ -58,6 +59,16 @@ function Register() {
               rules={[{ required: true }]}
             >
               <Input />
+            </Form.Item>
+            <Form.Item
+              name="role"
+              label="Role"
+              rules={[{ required: true }]}
+            >
+              <Select>
+                <Option value="user">User</Option>
+                <Option value="admin">Admin</Option>
+              </Select>
             </Form.Item>
 
             <button className="btn1 mt-2 mb-3">Register</button>

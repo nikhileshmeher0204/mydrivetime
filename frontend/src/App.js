@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import {Route , BrowserRouter , Redirect} from 'react-router-dom'
 import Home from './pages/Home'
@@ -10,25 +9,22 @@ import UserBookings from './pages/UserBookings';
 import AddCar from './pages/AddCar';
 import AdminHome from './pages/AdminHome';
 import EditCar from './pages/EditCar';
+import ProtectedRoute from "./components/ProtectedRoute";
+import "antd/dist/antd.css";
 
 function App() {
   return (
     <div className="App">
-
-         
-         
          <BrowserRouter>
-             
-             <ProtectedRoute path='/' exact component={Home} />
-             <Route path='/login' exact component={Login} />
-             <Route path='/register' exact component={Register} />
-             <ProtectedRoute path='/booking/:carid' exact component={BookingCar} />
-             <ProtectedRoute path='/userbookings' exact component={UserBookings} />
-             <ProtectedRoute path='/addcar' exact component={AddCar} />
-             <ProtectedRoute path='/editcar/:carid' exact component={EditCar} />
-             <ProtectedRoute path='/admin' exact component={AdminHome} />
-         
-         </BrowserRouter>
+        <ProtectedRoute path="/" exact component={Home} />
+        <Route path="/login" exact component={Login} />
+        <Route path="/register" exact component={Register} />
+        <ProtectedRoute path="/booking/:carid" exact component={BookingCar} />
+        <ProtectedRoute path="/userbookings" exact component={UserBookings} />
+        <ProtectedRoute path="/addcar" exact component={AddCar} role="admin" />
+        <ProtectedRoute path="/admin" exact component={AdminHome} role="admin" />
+        <ProtectedRoute path="/editcar/:carid" exact component={EditCar} role="admin" />
+      </BrowserRouter>
 
     </div>
   );
