@@ -1,58 +1,47 @@
 import React from "react";
-import { Menu, Dropdown, Button, Space , Row , Col } from "antd";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { Navbar, Nav, Container } from "react-bootstrap";
 
 function DefaultLayout(props) {
-    const user = JSON.parse(localStorage.getItem('user'))
-  const menu = (
-    <Menu>
-      <Menu.Item onClick={()=>{
-          localStorage.removeItem('user');
-          window.location.href='/login'
-      }}>
-          <li style={{color:'orangered'}}>Logout</li>
-      </Menu.Item>
-    </Menu>
-  );
+  const userString = localStorage.getItem("user");
+  const user = userString ? JSON.parse(userString) : null;
+
+  if (!user) {
+    return <div>Please login to continue</div>;
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  };
+
   return (
     <div>
-      <div className="header bs1">
-        <Row gutter={16} justify="center">
-          <Col lg={20} sm={24} xs={24}>
-            <div className="d-flex justify-content-between align-items-center">
-              <h1>
-                <b>
-                  <Link to="/" style={{ color: "orangered" }}>
-                    mydrivetime
-                  </Link>
-                </b>
-              </h1>
-              <div>
-              {user.role === "admin" ? (
-                  <Link to="/admin" style={{ marginRight: 20 }}>
-                    Home
-                  </Link>
-                ) : (
-                  <Link to="/" style={{ marginRight: 20 }}>
-                    Home
-                  </Link>
-                )}
-                <Link to="/userbookings" style={{ marginRight: 20 }}>
-                  Bookings
-                </Link>
-                <Dropdown overlay={menu} placement="bottomCenter">
-                  <Button>{user.username}</Button>
-                </Dropdown>
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </div>
+      <Navbar bg="light" expand="lg" className="bs1">
+        <Container>
+          <Navbar.Brand>
+            <Link to="/" style={{ color: "orangered" }}>
+              mydrivetime
+            </Link>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="ml-auto">
+              <Nav.Link as={Link} to={user.role === "admin" ? "/admin" : "/"}>
+                Home
+              </Nav.Link>
+              <Nav.Link as={Link} to="/userbookings">
+                Bookings
+              </Nav.Link>
+              <Nav.Link onClick={handleLogout}>
+                Logout ({user.username})
+              </Nav.Link>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
       <div className="content">{props.children}</div>
-      <div className="footer text-center">
-        <hr />
-        <p>Car Rental ©2023</p>
-      </div>
     </div>
   );
 }

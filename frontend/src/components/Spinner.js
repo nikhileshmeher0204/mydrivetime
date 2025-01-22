@@ -1,11 +1,14 @@
-import React from 'react'
-import {Spin} from 'antd'
+import React from "react";
+import { Spinner as BootstrapSpinner } from "react-bootstrap";
+
 function Spinner() {
-    return (
-        <div className="spinner">
-            <Spin size='large'/>
-        </div>
-    )
+  return (
+    <div className="spinner">
+      <BootstrapSpinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+      </BootstrapSpinner>
+    </div>
+  );
 }
 
-export default Spinner
+export default Spinner;

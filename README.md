@@ -13,7 +13,7 @@ This is a full-stack (MERN) car rental application with features for:
 **Technologies Used:**
 
 * Frontend: React.js
-* Styling: Ant Design
+* Styling: BootStrap
 * State Management: Redux-Thunk
 * Backend: Node.js, Express.js
 * Database: MongoDB

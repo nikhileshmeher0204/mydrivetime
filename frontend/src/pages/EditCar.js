@@ -1,91 +1,49 @@
-import { Col, Row, Form, Input } from "antd";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import DefaultLayout from "../components/DefaultLayout";
+import { editCar } from "../redux/actions/carsActions";
 import Spinner from "../components/Spinner";
-import { addCar, editCar, getAllCars } from "../redux/actions/carsActions";
+
 function EditCar({ match }) {
   const { cars } = useSelector((state) => state.carsReducer);
-  const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.alertsReducer);
-  const [car, setcar] = useState();
-  const [totalcars, settotalcars] = useState([]);
-  useEffect(() => {
-    if (cars.length == 0) {
-      dispatch(getAllCars());
-    } else {
-      settotalcars(cars);
-      setcar(cars.find((o) => o._id == match.params.carid));
-      console.log(car);
-    }
-  }, [cars]);
+  const dispatch = useDispatch();
+  const car = cars.find((car) => car._id === match.params.carid);
 
   function onFinish(values) {
     values._id = car._id;
-
     dispatch(editCar(values));
-    console.log(values);
   }
 
   return (
-    <DefaultLayout>
+    <Container>
       {loading && <Spinner />}
-      <Row justify="center mt-5">
-        <Col lg={12} sm={24} xs={24} className='p-2'>
-          {totalcars.length > 0 && (
-            <Form
-              initialValues={car}
-              className="bs1 p-2"
-              layout="vertical"
-              onFinish={onFinish}
-            >
-              <h3>Edit Car</h3>
+      <Row className="justify-content-md-center">
+        <Col md={6}>
+          <h1>Edit Car</h1>
+          <Form onSubmit={onFinish}>
+            <Form.Group controlId="formBasicName">
+              <Form.Label>Name</Form.Label>
+              <Form.Control type="text" defaultValue={car.name} required />
+            </Form.Group>
 
-              <hr />
-              <Form.Item
-                name="name"
-                label="Car name"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name="image"
-                label="Image url"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name="rentPerHour"
-                label="Rent per hour"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name="capacity"
-                label="Capacity"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                name="fuelType"
-                label="Fuel Type"
-                rules={[{ required: true }]}
-              >
-                <Input />
-              </Form.Item>
+            <Form.Group controlId="formBasicImage">
+              <Form.Label>Image URL</Form.Label>
+              <Form.Control type="text" defaultValue={car.image} required />
+            </Form.Group>
 
-              <div className="text-right">
-                <button className="btn1">Edit CAR</button>
-              </div>
-            </Form>
-          )}
+            <Form.Group controlId="formBasicRent">
+              <Form.Label>Rent Per Day</Form.Label>
+              <Form.Control type="number" defaultValue={car.rentPerDay} required />
+            </Form.Group>
+
+            <Button variant="primary" type="submit">
+              Edit Car
+            </Button>
+          </Form>
         </Col>
       </Row>
-    </DefaultLayout>
+    </Container>
   );
 }
 

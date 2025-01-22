@@ -1,46 +1,36 @@
 import axios from "axios";
-import {message} from 'antd'
+import { showToast } from '../../utils/toastUtils';
 
-export const userLogin=(reqObj)=>async dispatch=>{
-    dispatch({type: 'LOADING' , payload:true})
+export const userLogin = (reqObj) => async dispatch => {
+  dispatch({ type: 'LOADING', payload: true });
+  try {
+    const response = await axios.post('/api/users/login', reqObj);
+    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('user', JSON.stringify(response.data.user));
+    dispatch({ type: 'LOADING', payload: false });
+    showToast(dispatch, 'Login successful', 'success');
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 500);
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'LOADING', payload: false });
+    showToast(dispatch, 'Invalid credentials', 'danger');
+  }
+};
 
-    try {
-        const response = await axios.post("/api/users/login", reqObj);
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        message.success("Login success");
-        dispatch({ type: "LOADING", payload: false });
-        setTimeout(() => {
-          if (response.data.user.role === "admin") {
-            window.location.href = "/admin";
-          } else {
-            window.location.href = "/";
-          }
-        }, 500);
-      } catch (error) {
-        console.error("Login error:", error.response ? error.response.data : error.message);
-        message.error("Something went wrong");
-        dispatch({ type: "LOADING", payload: false });
-      }
-}
-
-export const userRegister=(reqObj)=>async dispatch=>{
-    
-    dispatch({type: 'LOADING' , payload:true})
-
-    try {
-        const response = await axios.post('/api/users/register' , reqObj)
-        message.success('Registration successfull')
-        setTimeout(() => {
-            window.location.href='/login'
-         
-        }, 500);
-       
-        dispatch({type: 'LOADING' , payload:false})
-        
-    } catch (error) {
-        console.log(error)
-        message.error('Something went wrong')
-        dispatch({type: 'LOADING' , payload:false})
-    }
-}
+export const userRegister = (reqObj) => async dispatch => {
+  dispatch({ type: 'LOADING', payload: true });
+  try {
+    await axios.post('/api/users/register', reqObj);
+    dispatch({ type: 'LOADING', payload: false });
+    showToast(dispatch, 'Registration successful', 'success');
+    setTimeout(() => {
+      window.location.href = '/login';
+    }, 500);
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: 'LOADING', payload: false });
+    showToast(dispatch, 'Something went wrong', 'danger');
+  }
+};

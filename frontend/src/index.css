@@ -16,9 +16,7 @@ code {
 .bs1{
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
-.ant-row{
-  margin: 0 20 !important;
-}
+
 .spinner{
   position: absolute;
   top: 50%;
@@ -53,14 +51,7 @@ button{
   padding: 10px;
   
 }
-.header .ant-btn{
-  box-shadow: none !important;
-  background-color : white !important;
-  color: orangered !important;
-  border: 1px solid orangered !important;
-  padding: 5px 15px !important;
-  outline: none !important;
-}
+
 .content{
   min-height: 90vh;
   
@@ -181,3 +172,20 @@ a{
   color: orangered !important;
 }
 
+.time-picker-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.react-datetime-picker {
+  width: 100%;
+}
+
+.booking-info {
+  margin-top: 20px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}

@@ -1,22 +1,36 @@
 import axios from "axios";
-import { message } from "antd";
+import { Toast } from 'react-bootstrap';
+
+
+export const showToast = (message, type = 'success') => {
+  return (
+    <Toast bg={type}>
+      <Toast.Body>{message}</Toast.Body>
+    </Toast>
+  );
+};
+
+
 export const bookCar = (reqObj) => async (dispatch) => {
   dispatch({ type: "LOADING", payload: true });
 
   try {
-     await axios.post("/api/bookings/bookcar" , reqObj);
-
+    await axios.post("/api/bookings/bookcar", reqObj);
     dispatch({ type: "LOADING", payload: false });
-    message.success("Your car booked successfully");
+    dispatch({ 
+      type: "SHOW_TOAST", 
+      payload: { message: "Your car booked successfully", type: "success" }
+    });
     setTimeout(() => {
-      window.location.href='/userbookings'
+      window.location.href = '/userbookings'
     }, 500);
-
-    
   } catch (error) {
     console.log(error);
     dispatch({ type: "LOADING", payload: false });
-    message.error("Something went wrong , please try later");
+    dispatch({ 
+      type: "SHOW_TOAST", 
+      payload: { message: "Something went wrong", type: "danger" }
+    });
   }
 };
 
