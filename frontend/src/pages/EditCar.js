@@ -22,9 +22,26 @@ function EditCar({ match }) {
         <Col md={6}>
           <h1>Edit Car</h1>
           <Form onSubmit={onFinish}>
-            <Form.Group controlId="formBasicName">
-              <Form.Label>Name</Form.Label>
-              <Form.Control type="text" defaultValue={car.name} required />
+            
+          <Form.Group controlId="formMake">
+              <Form.Label>Make</Form.Label>
+              <Form.Control type="text" defaultValue={car.make} required />
+            </Form.Group>
+
+            <Form.Group controlId="formModel">
+              <Form.Label>Model</Form.Label>
+              <Form.Control type="text" defaultValue={car.model} required />
+            </Form.Group>
+
+            <Form.Group controlId="formYear">
+              <Form.Label>Year</Form.Label>
+              <Form.Control type="number" defaultValue={car.year} required />
+            </Form.Group>
+              
+
+            <Form.Group controlId="formLocation">
+              <Form.Label>Location</Form.Label>
+              <Form.Control type="text" defaultValue={car.location} required />
             </Form.Group>
 
             <Form.Group controlId="formBasicImage">
@@ -38,7 +55,7 @@ function EditCar({ match }) {
             </Form.Group>
 
             <Button variant="primary" type="submit">
-              Edit Car
+            Update Car
             </Button>
           </Form>
         </Col>

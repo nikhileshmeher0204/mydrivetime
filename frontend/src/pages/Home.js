@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { getAllCars } from "../redux/actions/carsActions";
 import Spinner from "../components/Spinner";
 import DefaultLayout from "../components/DefaultLayout";
+import { FaMapMarkerAlt} from "react-icons/fa";
 
 function Home() {
   const dispatch = useDispatch();
@@ -41,9 +42,13 @@ function Home() {
                   />
                 </div>
                 <Card.Body>
-                  <Card.Title>{car.name}</Card.Title>
-                  <Card.Text>
-                    Rent per hour: ${car.rentPerHour}
+                <Card.Title>{`${car.year} ${car.make} ${car.model}`}</Card.Title>
+                <Card.Text>
+                    <div className="d-flex align-items-center mb-2">
+                      <FaMapMarkerAlt className="text-primary me-2" />
+                      <span>{car.location}</span>
+                    </div>
+                    Rent Per Hour: ${car.rentPerHour}
                   </Card.Text>
                   <Link to={`/booking/${car._id}`}>
                     <Button variant="primary">Book Now</Button>

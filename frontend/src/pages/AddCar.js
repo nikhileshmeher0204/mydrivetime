@@ -9,12 +9,15 @@ function AddCar() {
   const dispatch = useDispatch();
   const { loading } = useSelector(state => state.alertsReducer);
   const [formData, setFormData] = useState({
-    name: '',
+    make: '',
+    model: '',
+    year: '',
+    location: '',
     image: '',
-    rentPerHour: '',
     capacity: '',
-    fuelType: ''
-  });
+    fuelType: '',
+    rentPerHour: ''
+});
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,14 +39,52 @@ function AddCar() {
           <Col md={6}>
             <h1 className="mb-4">Add New Car</h1>
             <Form onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="formName">
-                <Form.Label>Car Name</Form.Label>
+            <Form.Group className="mb-3" controlId="formMake">
+                <Form.Label>Make</Form.Label>
                 <Form.Control
                   type="text"
-                  name="name"
-                  value={formData.name}
+                  name="make"
+                  value={formData.make}
                   onChange={handleChange}
-                  placeholder="Enter car name"
+                  placeholder="Enter car make"
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formModel">
+                <Form.Label>Model</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="model"
+                  value={formData.model}
+                  onChange={handleChange}
+                  placeholder="Enter car model"
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formYear">
+                <Form.Label>Year</Form.Label>
+                <Form.Control
+                  type="number"
+                  name="year"
+                  value={formData.year}
+                  onChange={handleChange}
+                  placeholder="Enter car year"
+                  min="1900"
+                  max={new Date().getFullYear() + 1}
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formLocation">
+                <Form.Label>Location</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  placeholder="Enter car location"
                   required
                 />
               </Form.Group>

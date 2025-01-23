@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import DefaultLayout from "../components/DefaultLayout";
 import { deleteCar, getAllCars } from "../redux/actions/carsActions";
 import Spinner from "../components/Spinner";
-import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
+import { FaEdit, FaTrash, FaPlus , FaMapMarkerAlt} from "react-icons/fa";
 
 function AdminHome() {
   const { cars } = useSelector((state) => state.carsReducer);
@@ -59,8 +59,12 @@ function AdminHome() {
                   style={{ height: '200px', objectFit: 'cover' }}
                 />
                 <Card.Body>
-                  <Card.Title>{car.name}</Card.Title>
+                  <Card.Title>{`${car.year} ${car.make} ${car.model}`}</Card.Title>
                   <Card.Text>
+                    <div className="d-flex align-items-center mb-2">
+                      <FaMapMarkerAlt className="text-primary me-2" />
+                      <span>{car.location}</span>
+                    </div>
                     Rent Per Hour: ${car.rentPerHour}
                   </Card.Text>
                   <div className="d-flex justify-content-between">
