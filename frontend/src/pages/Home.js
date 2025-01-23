@@ -29,8 +29,17 @@ function Home() {
         <Row>
           {cars && cars.map((car) => (
             <Col md={4} key={car._id}>
-              <Card style={{ width: "18rem", margin: "10px" }}>
-                <Card.Img variant="top" src={car.image} />
+              <Card className="car-card">
+                <div className="car-image-container">
+                  <Card.Img 
+                    variant="top" 
+                    src={car.image} 
+                    className="car-image"
+                    onError={(e) => {
+                      e.target.src = "https://via.placeholder.com/400x300?text=Car+Image";
+                    }}
+                  />
+                </div>
                 <Card.Body>
                   <Card.Title>{car.name}</Card.Title>
                   <Card.Text>
