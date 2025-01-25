@@ -37,7 +37,6 @@ function EditCar({ match }) {
               <Form.Label>Year</Form.Label>
               <Form.Control type="number" defaultValue={car.year} required />
             </Form.Group>
-              
 
             <Form.Group controlId="formLocation">
               <Form.Label>Location</Form.Label>

@@ -43,7 +43,7 @@ function UserBookings() {
               <Col md={4} key={booking._id} className="mb-3">
                 <Card>
                   <Card.Body>
-                    <Card.Title>{booking.car?.name || 'Car Unavailable'}</Card.Title>
+                    <Card.Title>{`${booking.car?.year} ${booking.car?.make} ${booking.car?.model}` || 'Car Unavailable'}</Card.Title>
                     <Card.Text>
                       <strong>From:</strong>{' '}
                       {format(new Date(booking.bookedTimeSlots.from), 'PPpp')}

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DefaultLayout from "../components/DefaultLayout";
 import Spinner from "../components/Spinner";
 import { addCar } from "../redux/actions/carsActions";
+import LocationAutocomplete from '../components/LocationAutocomplete';
 
 function AddCar() {
   const dispatch = useDispatch();
@@ -12,12 +13,21 @@ function AddCar() {
     make: '',
     model: '',
     year: '',
+    bodyStyle: '',
     location: '',
     image: '',
     capacity: '',
     fuelType: '',
+    transmissionType: '',
     rentPerHour: ''
 });
+
+const handleLocationChange = (value) => {
+  setFormData(prev => ({
+    ...prev,
+    location: value
+  }));
+};
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -77,15 +87,29 @@ function AddCar() {
                 />
               </Form.Group>
 
+              <Form.Group className="mb-3" controlId="formBodyStyle">
+                <Form.Label>Body Style</Form.Label>
+                <Form.Select
+                  name="bodyStyle"
+                  value={formData.bodyStyle}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select body style</option>
+                  <option value="Hatchback">Hatchback</option>
+                  <option value="SUV">SUV</option>
+                  <option value="Crossover">Crossover</option>
+                  <option value="Sedan">Sedan</option>
+                  <option value="Pickup">Pickup</option>
+                  <option value="Coupe">Coupe</option>
+                </Form.Select>
+              </Form.Group>
+
               <Form.Group className="mb-3" controlId="formLocation">
                 <Form.Label>Location</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="location"
+                <LocationAutocomplete
                   value={formData.location}
-                  onChange={handleChange}
-                  placeholder="Enter car location"
-                  required
+                  onChange={handleLocationChange}
                 />
               </Form.Group>
 
@@ -139,6 +163,22 @@ function AddCar() {
                   <option value="Electric">Electric</option>
                 </Form.Select>
               </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formTransmissionType">
+                <Form.Label>Transmission Type</Form.Label>
+                <Form.Select
+                  name="transmissionType"
+                  value={formData.transmissionType}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">Select transmission</option>
+                  <option value="Manual">Manual</option>
+                  <option value="Automatic">Automatic</option>
+                </Form.Select>
+              </Form.Group>
+
+              
 
               <Button variant="primary" type="submit" className="w-100">
                 Add Car

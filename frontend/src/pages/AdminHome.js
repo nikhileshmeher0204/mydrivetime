@@ -56,15 +56,17 @@ function AdminHome() {
                 <Card.Img 
                   variant="top" 
                   src={car.image} 
-                  style={{ height: '200px', objectFit: 'cover' }}
+                  style={{ height: '300px', objectFit: 'cover' }}
                 />
                 <Card.Body>
                   <Card.Title>{`${car.year} ${car.make} ${car.model}`}</Card.Title>
-                  <Card.Text>
-                    <div className="d-flex align-items-center mb-2">
+                  <Card.Text className="mb-2">
+                      <span className="d-flex align-items-center">
                       <FaMapMarkerAlt className="text-primary me-2" />
-                      <span>{car.location}</span>
-                    </div>
+                      {car.location}
+                    </span>
+                  </Card.Text>
+                  <Card.Text>
                     Rent Per Hour: ${car.rentPerHour}
                   </Card.Text>
                   <div className="d-flex justify-content-between">
