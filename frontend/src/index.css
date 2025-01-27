@@ -297,14 +297,27 @@ a{
   color: #495057;
 }
 
+:root {
+  --navbar-height: 60px;
+}
+
 .layout-container {
   min-height: 100vh;
+}
+
+.main-content {
+  padding-top: var(--navbar-height);
+}
+
+.main-content.home-page {
+  padding-top: 0;
 }
 
 .navbar-transparent {
   background: transparent !important;
   padding: 1rem 0;
   transition: background 0.3s ease;
+  height: var(--navbar-height);
 }
 
 .navbar-transparent.scrolled {

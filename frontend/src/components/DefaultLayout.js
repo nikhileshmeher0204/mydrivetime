@@ -67,7 +67,9 @@ function DefaultLayout(props) {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <div className="main-content">{props.children}</div>
+      <div className={`main-content ${isHomePage ? 'home-page' : ''}`}>
+        {props.children}
+      </div>
     </div>
   );
 }

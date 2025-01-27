@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Card, Button, Form, Modal } from "react-bootstrap";
+import { format } from 'date-fns';
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  Button,
+  Form,
+  Modal,
+} from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import DefaultLayout from "../components/DefaultLayout";
 import Spinner from "../components/Spinner";
@@ -22,20 +31,38 @@ function BookingCar({ match }) {
   const [driver, setDriver] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [fromDate, setFromDate] = useState(format(from, "yyyy-MM-dd"));
+  const [fromTime, setFromTime] = useState(format(from, "HH:mm"));
+  const [toDate, setToDate] = useState(format(to, "yyyy-MM-dd"));
+  const [toTime, setToTime] = useState(format(to, "HH:mm"));
+
+  const handleFromChange = (date, time) => {
+    const newFrom = new Date(`${date}T${time}`);
+    setFrom(newFrom);
+    setFromDate(date);
+    setFromTime(time);
+  };
+
+  const handleToChange = (date, time) => {
+    const newTo = new Date(`${date}T${time}`);
+    setTo(newTo);
+    setToDate(date);
+    setToTime(time);
+  };
 
   const formatDate = (date) => {
-    return new Date(date).toLocaleDateString('en-US', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return new Date(date).toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
   const formatTime = (date) => {
-    return new Date(date).toLocaleTimeString('en-US', {
-      hour: '2-digit',
-      minute: '2-digit'
+    return new Date(date).toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
     });
   };
 
@@ -87,8 +114,7 @@ function BookingCar({ match }) {
             <Card>
               <Card.Img variant="top" src={car.image} className="w-100" />
               <Card.Body>
-                <Card.Title>{car.name}</Card.Title>
-                <Card.Text>
+<Card.Title className="mb-0">{`${car.year} ${car.make} ${car.model}`}</Card.Title>                <Card.Text>
                   Rent Per Hour: ${car.rentPerHour}
                   <br />
                   Fuel Type: {car.fuelType}
@@ -100,30 +126,56 @@ function BookingCar({ match }) {
           </Col>
 
           <Col md={6}>
-            <Card>
+            <Card className="search-card">
               <Card.Body>
-                <Card.Title>Select Time Slots</Card.Title>
-                <Form.Group className="mb-3">
-                  <Form.Label>From</Form.Label>
-                  <DateTimePicker
-                    onChange={setFrom}
-                    value={from}
-                    className="form-control"
-                    minDate={new Date()}
-                  />
-                </Form.Group>
+                <Card.Title className="mb-4">Select Time Slots</Card.Title>
+                <div className="search-field search-field-date-time">
+                  <label className="search-label">From</label>
+                  <div className="date-time-group">
+                    <input
+                      type="date"
+                      className="form-control"
+                      value={fromDate}
+                      min={format(new Date(), "yyyy-MM-dd")}
+                      onChange={(e) =>
+                        handleFromChange(e.target.value, fromTime)
+                      }
+                    />
+                    <input
+                      type="time"
+                      className="form-control"
+                      value={fromTime}
+                      onChange={(e) =>
+                        handleFromChange(fromDate, e.target.value)
+                      }
+                    />
+                  </div>
+                </div>
 
-                <Form.Group className="mb-3">
-                  <Form.Label>To</Form.Label>
-                  <DateTimePicker
-                    onChange={setTo}
-                    value={to}
-                    className="form-control"
-                    minDate={from}
-                  />
-                </Form.Group>
+                <div className="search-field search-field-date-time mb-4">
+                  <label className="search-label">To</label>
+                  <div className="date-time-group">
+                    <input
+                      type="date"
+                      className="form-control"
+                      value={toDate}
+                      min={fromDate}
+                      onChange={(e) => handleToChange(e.target.value, toTime)}
+                    />
+                    <input
+                      type="time"
+                      className="form-control"
+                      value={toTime}
+                      onChange={(e) => handleToChange(toDate, e.target.value)}
+                    />
+                  </div>
+                </div>
 
-                <Button variant="primary" onClick={() => setShowModal(true)}>
+                <Button
+                  variant="outline-primary"
+                  className="mb-3"
+                  onClick={() => setShowModal(true)}
+                >
                   See Booked Slots
                 </Button>
 
