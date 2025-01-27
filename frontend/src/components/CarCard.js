@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaCar, FaGasPump, FaUsers, FaStar } from 'react-icons/fa';
+import { FaCar, FaGasPump, FaUsers, FaStar, FaMapMarkerAlt } from 'react-icons/fa';
 import { GiGearStickPattern } from 'react-icons/gi';
 
 function CarCard({ car }) {
@@ -23,6 +23,10 @@ function CarCard({ car }) {
         <div className="d-flex justify-content-between align-items-center mb-2">
           <Card.Title className="mb-0">{`${car.year} ${car.make} ${car.model}`}</Card.Title>
           <span className="price">₹{car.rentPerHour}/hr</span>
+        </div>
+        <div className="d-flex align-items-center mb-2">
+          <FaMapMarkerAlt className="me-1" />
+          <span style={{ fontSize: '0.875rem', fontWeight: '300' }}>{car.location}</span>
         </div>
         
         <hr className="my-2" />

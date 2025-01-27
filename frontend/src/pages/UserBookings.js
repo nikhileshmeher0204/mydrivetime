@@ -17,21 +17,27 @@ function UserBookings() {
     dispatch(getAllBookings());
   }, []);
 
-  const userBookings = bookings.filter(booking => 
-    booking.user === user?._id && booking.car
+  const userBookings = bookings.filter(
+    (booking) => booking.user === user?._id && booking.car
   );
 
-  if (loading) return <DefaultLayout><Spinner /></DefaultLayout>;
-  
-  if (error) return (
-    <DefaultLayout>
-      <Alert variant="danger">{error}</Alert>
-    </DefaultLayout>
-  );
+  if (loading)
+    return (
+      <DefaultLayout>
+        <Spinner />
+      </DefaultLayout>
+    );
+
+  if (error)
+    return (
+      <DefaultLayout>
+        <Alert variant="danger">{error}</Alert>
+      </DefaultLayout>
+    );
 
   return (
     <DefaultLayout>
-      <h3 className="text-center mt-2">My Bookings</h3>
+      <h3 className="text-center mt-4">My Bookings</h3>
       <Container>
         <Row>
           {userBookings.length === 0 ? (
@@ -40,22 +46,34 @@ function UserBookings() {
             </Col>
           ) : (
             userBookings.map((booking) => (
-              <Col md={4} key={booking._id} className="mb-3">
-                <Card>
+              <Col md={4} key={booking._id} className="mb-4">
+                <Card className="sleek-card shadow-sm">
+                  {booking.car?.image && (
+                    <Card.Img
+                      variant="top"
+                      src={booking.car.image}
+                      alt={`${booking.car?.make} ${booking.car?.model}`}
+                      className="img-fluid"
+                      style={{ height: "200px", objectFit: "cover" }}
+                    />
+                  )}
                   <Card.Body>
-                    <Card.Title>{`${booking.car?.year} ${booking.car?.make} ${booking.car?.model}` || 'Car Unavailable'}</Card.Title>
+                    <Card.Title>
+                      {`${booking.car?.year} ${booking.car?.make} ${booking.car?.model}` ||
+                        "Car Unavailable"}
+                    </Card.Title>
                     <Card.Text>
-                      <strong>From:</strong>{' '}
-                      {format(new Date(booking.bookedTimeSlots.from), 'PPpp')}
+                      <strong>From: </strong>
+                      {format(new Date(booking.bookedTimeSlots.from), "PPpp")}
                       <br />
-                      <strong>To:</strong>{' '}
-                      {format(new Date(booking.bookedTimeSlots.to), 'PPpp')}
+                      <strong>To: </strong>
+                      {format(new Date(booking.bookedTimeSlots.to), "PPpp")}
                       <br />
-                      <strong>Total Hours:</strong> {booking.totalHours}
+                      <strong>Total Hours: </strong> {booking.totalHours}
                       <br />
-                      <strong>Total Amount:</strong> ${booking.totalAmount}
+                      <strong>Total Amount: </strong> ${booking.totalAmount}
                     </Card.Text>
-                    <Button 
+                    <Button
                       variant="outline-primary"
                       href={`/booking/${booking._id}`}
                     >
