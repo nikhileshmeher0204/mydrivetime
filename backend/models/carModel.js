@@ -15,7 +15,8 @@ const carSchema = new mongoose.Schema({
         from: { type: String, required: true },
         to: { type: String, required: true }
     }],
-    rentPerHour: { type: Number, required: true }
+    rentPerHour: { type: Number, required: true },
+    addedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'users', required: true }
 }, { timestamps: true })
 
 const carModel = mongoose.model('cars' , carSchema)

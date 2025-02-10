@@ -13,7 +13,6 @@ function DefaultLayout(props) {
   // If not Home, set scrolled = true by default
   const [scrolled, setScrolled] = useState(!isHomePage);
 
-
   useEffect(() => {
     // If on Home page, manage scrolled class based on scroll
     if (isHomePage) {
@@ -43,7 +42,10 @@ function DefaultLayout(props) {
       >
         <Container>
           <Navbar.Brand>
-            <Link to="/" className="brand-link">
+            <Link
+              to={user.role === "admin" ? "/admin" : "/"}
+              className="brand-link"
+            >
               mydrivetime
             </Link>
           </Navbar.Brand>
@@ -67,7 +69,7 @@ function DefaultLayout(props) {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-      <div className={`main-content ${isHomePage ? 'home-page' : ''}`}>
+      <div className={`main-content ${isHomePage ? "home-page" : ""}`}>
         {props.children}
       </div>
     </div>

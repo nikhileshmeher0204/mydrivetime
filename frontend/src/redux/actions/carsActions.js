@@ -44,7 +44,7 @@ export const addCar = (reqObj) => async dispatch => {
       dispatch({ type: 'LOADING', payload: false });
       dispatch({ 
         type: "SHOW_TOAST", 
-        payload: { message: "Something went wrong", type: "danger" }
+        payload: { message: error.response?.data?.message || "Something went wrong", type: "danger" }
       });
     }
   };
@@ -52,7 +52,11 @@ export const addCar = (reqObj) => async dispatch => {
   export const editCar = (reqObj) => async dispatch => {
     dispatch({ type: 'LOADING', payload: true });
     try {
-      await axios.post('/api/cars/editcar', reqObj);
+      await axios.post('/api/cars/editcar', reqObj, {
+        headers: {
+          'Authorization': localStorage.getItem('token') // Add auth header
+        }
+      });
       dispatch({ type: 'LOADING', payload: false });
       showToast(dispatch, 'Car details updated successfully', 'success');
       setTimeout(() => {
@@ -61,7 +65,7 @@ export const addCar = (reqObj) => async dispatch => {
     } catch (error) {
       console.log(error);
       dispatch({ type: 'LOADING', payload: false });
-      showToast(dispatch, 'Something went wrong', 'danger');
+      showToast(dispatch, error.response?.data?.message || 'Something went wrong', 'danger');
     }
   };
 

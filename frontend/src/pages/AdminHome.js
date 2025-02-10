@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Container, Row, Col, Card, Button, Modal } from "react-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
 import DefaultLayout from "../components/DefaultLayout";
@@ -9,18 +9,23 @@ import { FaEdit, FaTrash, FaPlus , FaMapMarkerAlt} from "react-icons/fa";
 function AdminHome() {
   const { cars } = useSelector((state) => state.carsReducer);
   const { loading } = useSelector((state) => state.alertsReducer);
-  const [totalCars, setTotalCars] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedCar, setSelectedCar] = useState(null);
   const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("user"));
+
 
   useEffect(() => {
     dispatch(getAllCars());
-  }, []);
+  }, [dispatch]);
 
-  useEffect(() => {
-    setTotalCars(cars);
-  }, [cars]);
+  // Use useMemo instead of useState + useEffect
+  const totalCars = useMemo(() => {
+    if (cars.length > 0 && user) {
+      return cars.filter(car => car.addedBy === user._id);
+    }
+    return [];
+  }, [cars, user]);
 
   const handleDelete = (carId) => {
     dispatch(deleteCar({ carid: carId }));
